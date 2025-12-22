@@ -107,8 +107,10 @@ export const useFluxStore = create<FluxState>((set, get) => ({
         });
 
         // Persist
+        const { data: { user } } = await supabase.auth.getUser();
         await supabase.from('edges').insert({
             id: newEdge.id,
+            user_id: user?.id,
             source: newEdge.source,
             target: newEdge.target,
             source_handle: newEdge.sourceHandle,
@@ -121,8 +123,10 @@ export const useFluxStore = create<FluxState>((set, get) => ({
         set({ nodes: [...get().nodes, node] });
 
         // Persist Node
+        const { data: { user } } = await supabase.auth.getUser();
         await supabase.from('nodes').insert({
             id: node.id,
+            user_id: user?.id,
             type: node.type || 'default',
             position_x: node.position.x,
             position_y: node.position.y,

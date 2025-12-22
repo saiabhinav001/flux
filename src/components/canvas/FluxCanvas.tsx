@@ -29,7 +29,11 @@ const edgeTypes = {
 
 import PropertySidebar from '@/components/properties/PropertySidebar';
 
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
+
 const FluxCanvas = () => {
+    const router = useRouter();
     const {
         nodes,
         edges,
@@ -46,9 +50,24 @@ const FluxCanvas = () => {
     } = useFluxStore();
 
     useEffect(() => {
-        fetchGraph();
-        subscribe();
-    }, [fetchGraph, subscribe]);
+        const checkAuth = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                router.push('/login');
+                return;
+            }
+            fetchGraph();
+            subscribe();
+        };
+
+        checkAuth();
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            if (!session) router.push('/login');
+        });
+
+        return () => subscription.unsubscribe();
+    }, [fetchGraph, subscribe, router]);
 
     return (
         <motion.div
