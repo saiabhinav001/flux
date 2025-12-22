@@ -27,7 +27,7 @@ export default function LoginPage() {
                     email,
                     password,
                     options: {
-                        emailRedirectTo: `${window.location.origin}/`,
+                        emailRedirectTo: process.env.NEXT_PUBLIC_DEPLOY_URL || window.location.origin,
                     },
                 });
                 if (error) throw error;

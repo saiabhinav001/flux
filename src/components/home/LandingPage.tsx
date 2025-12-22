@@ -64,7 +64,10 @@ export default function LandingPage() {
                                 Start Building Free
                                 <ArrowRight className="w-5 h-5" />
                             </Link>
-                            <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+                            <button
+                                onClick={() => window.open('https://github.com/saiabhinav001/flux', '_blank')}
+                                className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+                            >
                                 <Play className="w-4 h-4 fill-current" />
                                 Watch Demo
                             </button>
