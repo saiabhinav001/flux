@@ -216,6 +216,12 @@ export const useFluxStore = create<FluxState>((set, get) => ({
                             } : node)
                         });
                     }
+                    if (payload.eventType === 'DELETE') {
+                        const old = payload.old as { id: string };
+                        set({
+                            nodes: get().nodes.filter(node => node.id !== old.id)
+                        });
+                    }
                 }
             )
             .on(
@@ -235,6 +241,12 @@ export const useFluxStore = create<FluxState>((set, get) => ({
                         };
                         const exists = get().edges.find(edge => edge.id === newEdge.id);
                         if (!exists) set({ edges: [...get().edges, newEdge] });
+                    }
+                    if (payload.eventType === 'DELETE') {
+                        const old = payload.old as { id: string };
+                        set({
+                            edges: get().edges.filter(edge => edge.id !== old.id)
+                        });
                     }
                 }
             )
