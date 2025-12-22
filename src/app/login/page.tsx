@@ -1,17 +1,18 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Zap, Loader2, AlertCircle, ArrowRight, Check } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
-export default function LoginPage() {
+function AuthContent() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [isSignUp, setIsSignUp] = useState(false);
+    const [isSignUp, setIsSignUp] = useState(searchParams.get('view') === 'signup');
     const [error, setError] = useState<string | null>(null);
     const [message, setMessage] = useState<string | null>(null);
 
@@ -212,5 +213,17 @@ export default function LoginPage() {
             </div>
 
         </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen w-full bg-[#030303] flex items-center justify-center">
+                <Loader2 className="w-6 h-6 text-cyan-400 animate-spin" />
+            </div>
+        }>
+            <AuthContent />
+        </Suspense>
     );
 }
