@@ -38,7 +38,7 @@ export const NodeBase = ({
             transition={{ duration: 0.2 }}
             className={clsx(
                 "relative min-w-[280px] rounded-xl bg-[#0A0A0A]/90 backdrop-blur-xl border transition-all duration-300",
-                selected ? "border-white/40 ring-1 ring-white/20" : statusColors[status]
+                selected ? "border-white/40 shadow-[0_0_30px_-5px_rgba(255,255,255,0.2)] scale-[1.02] z-50 ring-1 ring-white/20" : statusColors[status]
             )}
         >
             {/* Handles */}
