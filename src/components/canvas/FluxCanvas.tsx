@@ -51,20 +51,12 @@ const FluxCanvas = () => {
     } = useFluxStore();
 
     useEffect(() => {
-        const checkAuth = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
-                router.push('/login');
-                return;
-            }
-            fetchGraph();
-            subscribe();
-        };
-
-        checkAuth();
+        // Initial fetch
+        fetchGraph();
+        subscribe();
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            if (!session) router.push('/login');
+            // Optional: Handle precise session drops if needed, but Page wrapper handles most 
         });
 
         return () => subscription.unsubscribe();
@@ -167,7 +159,16 @@ const FluxCanvas = () => {
                 )}
 
                 <PropertySidebar />
-                <Panel position="top-right" className="m-4">
+                <Panel position="top-right" className="m-4 flex items-center gap-4">
+                    <button
+                        onClick={async () => {
+                            await supabase.auth.signOut();
+                            router.push('/');
+                        }}
+                        className="px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium hover:bg-red-500/20 transition-colors"
+                    >
+                        Log Out
+                    </button>
                     <div className="text-xs text-gray-500 font-mono">
                         Flux v0.1.0-alpha
                     </div>
