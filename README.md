@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Flux ⚡
 
-## Getting Started
+> **The Event-Driven Command Canvas.**
+> A local-first, keyboard-centric workflow automation tool for the modern web.
 
-First, run the development server:
+![Flux Canvas](./docs/hero.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌟 Vision
+Flux is not a task manager or a Zapier clone. It is a **live instrument** for composing automation.
+Built with a "Neo-glassmorphism" aesthetic, it prioritizes **God-tier micro-interactions**, real-time state, and keyboard parity.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 Tech Stack
+- **Framework**: Next.js 16 (App Router)
+- **Styling**: Tailwind CSS v4 + Framer Motion
+- **Canvas Engine**: React Flow (@xyflow/react)
+- **State**: Zustand + Supabase Realtime
+- **Database**: PostgreSQL (Supabase)
+- **Scheduling**: GitHub Actions (Free Cron)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
+1. Node.js 18+
+2. A [Supabase](https://supabase.com) project.
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone & Install**
+   ```bash
+   git clone https://github.com/yourusername/flux.git
+   cd flux
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Environment Setup**
+   Create a `.env.local` file:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Database Schema**
+   Run the SQL found in [`schema.sql`](./schema.sql) in your Supabase SQL Editor to create tables and enabling Realtime.
 
-## Deploy on Vercel
+4. **Run Locally**
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:3000`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎮 Usage
+- **Open Command Palette**: `Cmd + K` (or `Ctrl + K`)
+- **Add Trigger**: Select "Add Trigger" (Cron Node).
+- **Add Action**: Select "Add Action" (HTTP Request Node).
+- **Connect**: Drag from the bottom handle of Trigger to the top handle of Action.
+- **Run Simulation**: `Cmd + K` -> "Trigger Execution".
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🕰 Setting up the "Free Scheduler"
+Flux uses GitHub Actions to trigger your workflows for free (every 5 minutes).
+
+1. **Deploy** your app (e.g., to Vercel).
+2. **Configure Secrets** in your GitHub Repo:
+   - `DEPLOY_URL`: Your deployed URL (e.g., `https://my-flux.vercel.app`)
+   - `CRON_KEY`: `flux-secret-cron-key`
+3. **Enable Workflow**: The scheduler is defined in `.github/workflows/scheduler.yml`.
+
+## 📜 License
+MIT © 2025 Flux Contributors
