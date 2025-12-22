@@ -8,7 +8,7 @@ import {
     Connection,
     Edge
 } from '@xyflow/react';
-import { FluxNode, ExecutionStatus, FluxNodeData } from '../types';
+import { FluxNode, ExecutionStatus, FluxNodeData, PendingConnection } from '../types';
 import { supabase } from '@/lib/supabase';
 
 interface FluxState {
@@ -18,6 +18,10 @@ interface FluxState {
 
     setNodes: (nodes: FluxNode[]) => void;
     setEdges: (edges: Edge[]) => void;
+
+    // Pending Connection State (for Drop-to-Add)
+    pendingConnection: PendingConnection | null;
+    setPendingConnection: (connection: PendingConnection | null) => void;
 
     // Interaction
     onNodesChange: (changes: NodeChange[]) => void;
@@ -40,7 +44,9 @@ export const useFluxStore = create<FluxState>((set, get) => ({
     nodes: [],
     edges: [],
     isCommandOpen: false,
+    pendingConnection: null,
 
+    setPendingConnection: (connection) => set({ pendingConnection: connection }),
     setNodes: (nodes) => set({ nodes }),
     setEdges: (edges) => set({ edges }),
 
@@ -48,11 +54,25 @@ export const useFluxStore = create<FluxState>((set, get) => ({
         set({
             nodes: applyNodeChanges(changes, get().nodes) as FluxNode[],
         });
+
+        // Handle Deletions
+        changes.forEach(async (change) => {
+            if (change.type === 'remove') {
+                await supabase.from('nodes').delete().eq('id', change.id);
+            }
+        });
     },
 
     onEdgesChange: (changes) => {
         set({
             edges: applyEdgeChanges(changes, get().edges),
+        });
+
+        // Handle Deletions
+        changes.forEach(async (change) => {
+            if (change.type === 'remove') {
+                await supabase.from('edges').delete().eq('id', change.id);
+            }
         });
     },
 
@@ -76,7 +96,7 @@ export const useFluxStore = create<FluxState>((set, get) => ({
     addNode: async (node) => {
         set({ nodes: [...get().nodes, node] });
 
-        // Persist
+        // Persist Node
         await supabase.from('nodes').insert({
             id: node.id,
             type: node.type || 'default',
@@ -84,6 +104,20 @@ export const useFluxStore = create<FluxState>((set, get) => ({
             position_y: node.position.y,
             data: node.data
         });
+
+        // Handle Pending Connection (Drop-to-Add)
+        const { pendingConnection, onConnect, setPendingConnection } = get();
+        if (pendingConnection) {
+            // Connect source -> new node
+            // Assuming we dragged FROM source TO pane
+            await onConnect({
+                source: pendingConnection.source,
+                sourceHandle: pendingConnection.sourceHandle,
+                target: node.id,
+                targetHandle: node.type === 'action' ? 'top' : 'bottom', // Naive handle guess
+            } as Connection);
+            setPendingConnection(null);
+        }
     },
 
     updateNodePosition: async (id, position) => {

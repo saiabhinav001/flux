@@ -1,4 +1,4 @@
-import { Node, Edge } from '@xyflow/react';
+import { Node } from '@xyflow/react';
 
 export type ExecutionStatus = 'IDLE' | 'RUNNING' | 'SUCCESS' | 'ERROR';
 
@@ -12,6 +12,13 @@ export interface FluxNodeData extends Record<string, unknown> {
 }
 
 export type FluxNode = Node<FluxNodeData>;
+
+export interface PendingConnection {
+    source: string;
+    sourceHandle: string | null;
+    target: string | null;
+    targetHandle: string | null;
+}
 
 export interface Command {
     id: string;

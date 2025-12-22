@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
     ReactFlow,
     Background,
@@ -35,8 +35,10 @@ const FluxCanvas = () => {
         onEdgesChange,
         onConnect,
         isCommandOpen,
+        setCommandOpen,
         fetchGraph,
-        subscribe
+        subscribe,
+        setPendingConnection
     } = useFluxStore();
 
     useEffect(() => {
@@ -63,6 +65,24 @@ const FluxCanvas = () => {
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
+                onConnectStart={(_, params) => {
+                    if (params.nodeId) {
+                        setPendingConnection({
+                            source: params.nodeId,
+                            sourceHandle: params.handleId,
+                            target: null, // Placeholder
+                            targetHandle: null
+                        });
+                    }
+                }}
+                onConnectEnd={(event) => {
+                    const targetIsPane = (event.target as Element).classList.contains('react-flow__pane');
+                    if (targetIsPane) {
+                        setCommandOpen(true);
+                    } else {
+                        setPendingConnection(null); // Cancel if dropped elsewhere (valid connect handled by onConnect)
+                    }
+                }}
                 fitView
                 colorMode="dark"
                 className="flux-flow"

@@ -10,12 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check Secrets & Run Cron
+        env:
+          DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
+          CRON_KEY: ${{ secrets.CRON_KEY }}
         run: |
-          if [ -z "${{ secrets.DEPLOY_URL }}" ]; then
+          if [ -z "$DEPLOY_URL" ]; then
             echo "Error: DEPLOY_URL secret is not set!"
             echo "Please go to Settings > Secrets and variables > Actions and add 'DEPLOY_URL'."
             exit 1
           fi
           
-          echo "Triggering Cron Job at: ${{ secrets.DEPLOY_URL }}/api/cron"
-          curl -f -L "${{ secrets.DEPLOY_URL }}/api/cron?key=${{ secrets.CRON_KEY }}"
+          echo "Triggering Cron Job at: $DEPLOY_URL/api/cron"
+          curl -f -L "$DEPLOY_URL/api/cron?key=$CRON_KEY"
