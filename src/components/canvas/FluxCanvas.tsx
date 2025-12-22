@@ -11,6 +11,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { motion } from 'framer-motion';
+import { Zap } from 'lucide-react';
 
 import { useFluxStore } from '@/store/useFluxStore';
 
@@ -133,6 +134,37 @@ const FluxCanvas = () => {
                     nodeColor="#333"
                     maskColor="rgba(0,0,0, 0.6)"
                 />
+
+                {nodes.length === 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                        <div className="text-center space-y-4 max-w-md px-6">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 0.2 }}
+                                className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto border border-white/10"
+                            >
+                                <Zap className="w-8 h-8 text-cyan-400" />
+                            </motion.div>
+                            <motion.h2
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 }}
+                                className="text-2xl font-bold text-white tracking-tight"
+                            >
+                                Ready to build?
+                            </motion.h2>
+                            <motion.p
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4 }}
+                                className="text-sm text-gray-400 leading-relaxed"
+                            >
+                                Press <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-gray-200 font-mono text-xs">Cmd+K</kbd> to open the command palette and add your first trigger.
+                            </motion.p>
+                        </div>
+                    </div>
+                )}
 
                 <PropertySidebar />
                 <Panel position="top-right" className="m-4">
