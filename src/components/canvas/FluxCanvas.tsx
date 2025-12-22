@@ -38,6 +38,7 @@ const FluxCanvas = () => {
         setCommandOpen,
         fetchGraph,
         subscribe,
+        updateNodePosition,
         setPendingConnection
     } = useFluxStore();
 
@@ -65,6 +66,9 @@ const FluxCanvas = () => {
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
+                onNodeDragStop={(_, node) => {
+                    updateNodePosition(node.id, node.position);
+                }}
                 onConnectStart={(_, params) => {
                     if (params.nodeId) {
                         setPendingConnection({
