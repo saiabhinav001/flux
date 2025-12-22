@@ -26,9 +26,12 @@ export default function LoginPage() {
                 const { error } = await supabase.auth.signUp({
                     email,
                     password,
+                    options: {
+                        emailRedirectTo: `${window.location.origin}/auth/callback`,
+                    },
                 });
                 if (error) throw error;
-                setMessage('Check your email for the confirmation link!');
+                setMessage('Check your email to verify your account.');
             } else {
                 const { error } = await supabase.auth.signInWithPassword({
                     email,
