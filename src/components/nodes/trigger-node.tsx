@@ -18,7 +18,7 @@ export function TriggerNode({ data, selected }: NodeProps<FluxNode>) {
                     Trigger
                 </div>
                 <div className="text-sm text-gray-300 font-mono bg-black/20 p-2 rounded border border-white/5">
-                    {data.triggerType === 'cron' ? '0/5 * * * *' : 'Manual Invocation'}
+                    {data.triggerType === 'cron' ? (data.cron as string || '*/5 * * * *') : 'Manual Invocation'}
                 </div>
             </div>
         </NodeBase>

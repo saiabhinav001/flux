@@ -27,6 +27,8 @@ const edgeTypes = {
     animated: AnimatedEdge,
 };
 
+import PropertySidebar from '@/components/properties/PropertySidebar';
+
 const FluxCanvas = () => {
     const {
         nodes,
@@ -39,7 +41,8 @@ const FluxCanvas = () => {
         fetchGraph,
         subscribe,
         updateNodePosition,
-        setPendingConnection
+        setPendingConnection,
+        setSelectedNodeId
     } = useFluxStore();
 
     useEffect(() => {
@@ -69,6 +72,10 @@ const FluxCanvas = () => {
                 onNodeDragStop={(_, node) => {
                     updateNodePosition(node.id, node.position);
                 }}
+                onNodeClick={(_, node) => {
+                    setSelectedNodeId(node.id);
+                }}
+                onPaneClick={() => setSelectedNodeId(null)}
                 onConnectStart={(_, params) => {
                     if (params.nodeId) {
                         setPendingConnection({
@@ -108,6 +115,7 @@ const FluxCanvas = () => {
                     maskColor="rgba(0,0,0, 0.6)"
                 />
 
+                <PropertySidebar />
                 <Panel position="top-right" className="m-4">
                     <div className="text-xs text-gray-500 font-mono">
                         Flux v0.1.0-alpha

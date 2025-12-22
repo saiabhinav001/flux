@@ -23,6 +23,11 @@ interface FluxState {
     pendingConnection: PendingConnection | null;
     setPendingConnection: (connection: PendingConnection | null) => void;
 
+    // Selection & Editing
+    selectedNodeId: string | null;
+    setSelectedNodeId: (id: string | null) => void;
+    updateNodeData: (id: string, data: Partial<FluxNodeData>) => Promise<void>;
+
     // Interaction
     onNodesChange: (changes: NodeChange[]) => void;
     onEdgesChange: (changes: EdgeChange[]) => void;
@@ -45,8 +50,27 @@ export const useFluxStore = create<FluxState>((set, get) => ({
     edges: [],
     isCommandOpen: false,
     pendingConnection: null,
+    selectedNodeId: null,
 
     setPendingConnection: (connection) => set({ pendingConnection: connection }),
+    setSelectedNodeId: (id) => set({ selectedNodeId: id }),
+
+    updateNodeData: async (id, data) => {
+        set((state) => ({
+            nodes: state.nodes.map((node) =>
+                node.id === id ? { ...node, data: { ...node.data, ...data } } : node
+            ),
+        }));
+
+        // Persist to Supabase
+        // We need to fetch the current data first or just merge?
+        // Supabase jsonb updates are tricky. We replaced the local state so we have the specific node.
+        const node = get().nodes.find(n => n.id === id);
+        if (node) {
+            await supabase.from('nodes').update({ data: node.data }).eq('id', id);
+        }
+    },
+
     setNodes: (nodes) => set({ nodes }),
     setEdges: (edges) => set({ edges }),
 

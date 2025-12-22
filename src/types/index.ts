@@ -9,6 +9,9 @@ export interface FluxNodeData extends Record<string, unknown> {
     status: ExecutionStatus;
     lastRun?: string;
     output?: unknown;
+    url?: string;
+    method?: string;
+    cron?: string;
 }
 
 export type FluxNode = Node<FluxNodeData>;
