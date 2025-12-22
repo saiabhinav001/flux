@@ -8,8 +8,12 @@ export default function Home() {
       <CommandPalette />
 
       {/* Overlay Hints */}
-      <div className="fixed bottom-4 left-4 z-40 text-xs text-gray-600 font-mono pointer-events-none select-none">
-        <p>⌘ + K to open command menu</p>
+      {/* Overlay Hints */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 pointer-events-none select-none">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-xl">
+          <span className="text-[10px] text-gray-400 font-mono tracking-wide uppercase">Command Menu</span>
+          <kbd className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/10 text-[10px] text-gray-300 font-sans font-medium min-w-[20px] justify-center">⌘K</kbd>
+        </div>
       </div>
     </main>
   );
