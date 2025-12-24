@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Settings, LogOut, Keyboard } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
@@ -94,7 +94,7 @@ export function UserMenu({ email, onOpenHotkeys }: UserMenuProps) {
     );
 }
 
-function MenuButton({ icon, label, onClick, danger }: { icon: React.ReactNode, label: string, onClick: () => void, danger?: boolean }) {
+function MenuButton({ icon, label, onClick, danger }: { icon: any, label: string, onClick: () => void, danger?: boolean }) {
     return (
         <button
             onClick={onClick}

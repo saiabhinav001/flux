@@ -23,25 +23,21 @@ export function LogDrawer({ isOpen, onClose }: LogDrawerProps) {
     const [loading, setLoading] = useState(false);
     const [selectedLogId, setSelectedLogId] = useState<string | null>(null);
 
-    const fetchLogs = useCallback(async () => {
-        setLoading(true);
-        const { data, error } = await supabase
-            .from('execution_logs')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(50);
-
-        if (error) {
-            console.error('Error fetching logs:', error);
-        }
-
-        if (data) setLogs(data as unknown as ExecutionLog[]);
-        setLoading(false);
-    }, []);
-
     useEffect(() => {
         if (isOpen) {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            const fetchLogs = async () => {
+                setLoading(true);
+                const { data, error } = await supabase
+                    .from('execution_logs')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(50);
+                if (!error && data) {
+                    setLogs(data as unknown as ExecutionLog[]);
+                }
+                setLoading(false);
+            };
+
             fetchLogs();
 
             // Subscribe for real-time
@@ -57,7 +53,7 @@ export function LogDrawer({ isOpen, onClose }: LogDrawerProps) {
                 supabase.removeChannel(channel);
             };
         }
-    }, [isOpen, fetchLogs]);
+    }, [isOpen]);
 
     return (
         <AnimatePresence>
