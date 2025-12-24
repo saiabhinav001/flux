@@ -1,13 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-// Initialize Supabase Admin Client (using the same keys for MVP)
-// In production, use SERVICE_ROLE_KEY for the backend to bypass RLS if needed, 
-// but ANNON_KEY works if RLS allows public access (which we set).
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { supabase } from '@/lib/supabase';
 
 export async function GET(request: Request) {
     // 1. Security Check (Basic MVP)

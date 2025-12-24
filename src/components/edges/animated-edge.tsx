@@ -1,7 +1,6 @@
 import { BaseEdge, EdgeProps, getBezierPath } from '@xyflow/react';
 
 export default function AnimatedEdge({
-    id,
     sourceX,
     sourceY,
     targetX,
@@ -10,9 +9,8 @@ export default function AnimatedEdge({
     targetPosition,
     style = {},
     markerEnd,
-    selected,
 }: EdgeProps) {
-    const [edgePath, labelX, labelY] = getBezierPath({
+    const [edgePath] = getBezierPath({
         sourceX,
         sourceY,
         sourcePosition,

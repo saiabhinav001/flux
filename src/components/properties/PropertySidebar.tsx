@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Globe, Zap, Clock } from 'lucide-react';
 import { useFluxStore } from '@/store/useFluxStore';
-import { useEffect, useState } from 'react';
 
 export default function PropertySidebar() {
     const { selectedNodeId, setSelectedNodeId, nodes, updateNodeData } = useFluxStore();

@@ -1,0 +1,72 @@
+
+> flux@0.1.0 lint
+> eslint
+
+
+C:\Users\Abhi\Downloads\flux\src\app\api\execute\route.ts
+  57:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Abhi\Downloads\flux\src\app\login\page.tsx
+  44:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Abhi\Downloads\flux\src\app\page.tsx
+  14:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Abhi\Downloads\flux\src\components\canvas\LogDrawer.tsx
+  44:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Abhi\Downloads\flux\src\components\canvas\LogDrawer.tsx:44:13
+  42 |     useEffect(() => {
+  43 |         if (isOpen) {
+> 44 |             fetchLogs();
+     |             ^^^^^^^^^ Avoid calling setState() directly within an effect
+  45 |
+  46 |             // Subscribe for real-time
+  47 |             const channel = supabase  react-hooks/set-state-in-effect
+
+C:\Users\Abhi\Downloads\flux\src\components\command\CommandPalette.tsx
+  5:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  6:18  warning  'Plus' is defined but never used             @typescript-eslint/no-unused-vars
+  8:10  warning  'clsx' is defined but never used             @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\edges\animated-edge.tsx
+  12:5  warning  'selected' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\home\LandingPage.tsx
+  4:47  warning  'GitBranch' is defined but never used  @typescript-eslint/no-unused-vars
+  4:58  warning  'Terminal' is defined but never used   @typescript-eslint/no-unused-vars
+  4:68  warning  'Globe' is defined but never used      @typescript-eslint/no-unused-vars
+  4:75  warning  'Shield' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\layout\UserMenu.tsx
+  94:63  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Abhi\Downloads\flux\src\components\nodes\action-node.tsx
+  1:10  warning  'Handle' is defined but never used          @typescript-eslint/no-unused-vars
+  1:18  warning  'Position' is defined but never used        @typescript-eslint/no-unused-vars
+  2:17  warning  'Play' is defined but never used            @typescript-eslint/no-unused-vars
+  2:23  warning  'Clock' is defined but never used           @typescript-eslint/no-unused-vars
+  2:30  warning  'MoreHorizontal' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\nodes\trigger-node.tsx
+  1:10  warning  'Handle' is defined but never used          @typescript-eslint/no-unused-vars
+  1:18  warning  'Position' is defined but never used        @typescript-eslint/no-unused-vars
+  2:15  warning  'MoreHorizontal' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\lib\server\engine.ts
+    2:20  warning  'FluxNodeData' is defined but never used  @typescript-eslint/no-unused-vars
+   16:14  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:47  warning  '_context' is defined but never used      @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\store\useFluxStore.ts
+  106:52   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  202:100  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 26 problems (8 errors, 18 warnings)
+

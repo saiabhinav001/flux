@@ -41,8 +41,9 @@ function AuthContent() {
                 if (error) throw error;
                 router.push('/');
             }
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : 'An error occurred';
+            setError(message);
         } finally {
             setIsLoading(false);
         }
@@ -207,7 +208,7 @@ function AuthContent() {
                     </div>
                 </div>
 
-                <div className="absolute bottom-8 text-[10px] text-gray-800 font-mono">
+                <div className="absolute bottom-8 text-[10px] text-gray-600 font-mono">
                     v0.1.0 • SECURE CONNECTION
                 </div>
             </div>

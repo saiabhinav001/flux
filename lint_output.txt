@@ -1,0 +1,95 @@
+
+> flux@0.1.0 lint
+> eslint
+
+
+C:\Users\Abhi\Downloads\flux\src\app\api\execute\route.ts
+  57:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Abhi\Downloads\flux\src\app\login\page.tsx
+  44:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Abhi\Downloads\flux\src\app\page.tsx
+  14:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Abhi\Downloads\flux\src\components\canvas\LogDrawer.tsx
+  17:14  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  28:13  error    Error: Cannot access variable before it is declared
+
+`fetchLogs` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Users\Abhi\Downloads\flux\src\components\canvas\LogDrawer.tsx:28:13
+  26 |     useEffect(() => {
+  27 |         if (isOpen) {
+> 28 |             fetchLogs();
+     |             ^^^^^^^^^ `fetchLogs` accessed before it is declared
+  29 |
+  30 |             // Subscribe for real-time
+  31 |             const channel = supabase
+
+C:\Users\Abhi\Downloads\flux\src\components\canvas\LogDrawer.tsx:45:5
+  43 |     }, [isOpen]);
+  44 |
+> 45 |     const fetchLogs = async () => {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 46 |         setLoading(true);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 47 |         const { data, error } = await supabase
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 54 |         setLoading(false);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 55 |     };
+     | ^^^^^^^ `fetchLogs` is declared here
+  56 |
+  57 |     return (
+  58 |         <AnimatePresence>  react-hooks/immutability
+  47:23  warning  'error' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\command\CommandPalette.tsx
+  5:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  6:18  warning  'Plus' is defined but never used             @typescript-eslint/no-unused-vars
+  8:10  warning  'clsx' is defined but never used             @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\edges\animated-edge.tsx
+   4:5   warning  'id' is defined but never used               @typescript-eslint/no-unused-vars
+  13:5   warning  'selected' is defined but never used         @typescript-eslint/no-unused-vars
+  15:22  warning  'labelX' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  15:30  warning  'labelY' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\home\LandingPage.tsx
+  4:33  warning  'CheckCircle2' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\layout\UserMenu.tsx
+   4:38  warning  'User' is defined but never used          @typescript-eslint/no-unused-vars
+   4:44  warning  'Command' is defined but never used       @typescript-eslint/no-unused-vars
+  94:63  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Abhi\Downloads\flux\src\components\nodes\action-node.tsx
+  2:10  warning  'Activity' is defined but never used  @typescript-eslint/no-unused-vars
+  2:27  warning  'Database' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\nodes\trigger-node.tsx
+  2:10  warning  'Play' is defined but never used   @typescript-eslint/no-unused-vars
+  2:16  warning  'Clock' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\properties\PropertySidebar.tsx
+  6:10  warning  'useEffect' is defined but never used  @typescript-eslint/no-unused-vars
+  6:21  warning  'useState' is defined but never used   @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\lib\server\engine.ts
+    2:20  warning  'FluxNodeData' is defined but never used  @typescript-eslint/no-unused-vars
+   16:14  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   43:39  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:47  warning  'context' is defined but never used       @typescript-eslint/no-unused-vars
+  110:71  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  114:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  163:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Abhi\Downloads\flux\src\store\useFluxStore.ts
+   11:20  warning  'ExecutionStatus' is defined but never used  @typescript-eslint/no-unused-vars
+  106:52  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  202:49  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+Γ£û 33 problems (13 errors, 20 warnings)
+

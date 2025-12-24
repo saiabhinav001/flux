@@ -1,5 +1,5 @@
 import { NodeProps } from '@xyflow/react';
-import { Play, Clock, Zap } from 'lucide-react';
+import { Zap } from 'lucide-react';
 import { NodeBase } from './node-base';
 import { FluxNode } from '@/types';
 

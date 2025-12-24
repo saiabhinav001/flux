@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { Command } from 'cmdk';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Plus, Terminal, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Search, Zap, Terminal } from 'lucide-react';
 import { useFluxStore } from '@/store/useFluxStore';
-import { clsx } from 'clsx';
 
 const CommandPalette = () => {
     const { isCommandOpen, setCommandOpen, toggleCommandPalette, addNode, executeGraph } = useFluxStore();

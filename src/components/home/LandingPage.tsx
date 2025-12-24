@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, Play, CheckCircle2, Layout, Lock } from 'lucide-react';
+import { ArrowRight, Zap, Play, Layout, Lock } from 'lucide-react';
 import Link from 'next/link';
 
 export default function LandingPage() {

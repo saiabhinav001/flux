@@ -103,7 +103,8 @@ export const useFluxStore = create<FluxState>((set, get) => ({
     onConnect: async (connection) => {
         const newEdge = { ...connection, id: `e-${Date.now()}`, type: 'animated', animated: true };
         set({
-            edges: addEdge(newEdge, get().edges as any[]),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            edges: addEdge(newEdge, get().edges as any),
         });
 
         // Persist
@@ -159,32 +160,67 @@ export const useFluxStore = create<FluxState>((set, get) => ({
     setCommandOpen: (open) => set({ isCommandOpen: open }),
 
     executeGraph: async () => {
-        // Keep local execution simulation for now, as Edge Functions aren't set up
         const { nodes, setNodes, edges } = get();
+
+        // 1. Reset Status
         const resetNodes = nodes.map(n => ({ ...n, data: { ...n.data, status: 'IDLE' } }));
         setNodes(resetNodes as FluxNode[]);
 
+        // 2. Get Token
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+            console.error("No session found for execution");
+            return;
+        }
+
+        // 3. Optimistic Update (Trigger Running)
         const trigger = resetNodes.find(n => n.type === 'trigger');
-        if (!trigger) return;
+        if (trigger) {
+            setNodes(get().nodes.map(n => n.id === trigger.id ? { ...n, data: { ...n.data, status: 'RUNNING' } } : n));
+        }
 
-        const updateStatus = (id: string, status: ExecutionStatus) => {
-            set((state) => ({
-                nodes: state.nodes.map(n => n.id === id ? { ...n, data: { ...n.data, status } } : n)
-            }));
-        };
+        try {
+            // 4. Call API
+            const response = await fetch('/api/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${session.access_token}`
+                },
+                body: JSON.stringify({ nodes, edges })
+            });
 
-        updateStatus(trigger.id, 'RUNNING');
-        await new Promise(r => setTimeout(r, 1000));
-        updateStatus(trigger.id, 'SUCCESS');
-
-        const connectedEdges = edges.filter(e => e.source === trigger.id);
-        for (const edge of connectedEdges) {
-            const targetNode = nodes.find(n => n.id === edge.target);
-            if (targetNode) {
-                updateStatus(targetNode.id, 'RUNNING');
-                await new Promise(r => setTimeout(r, 1500));
-                updateStatus(targetNode.id, 'SUCCESS');
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.error || 'Execution Failed');
             }
+
+            const { results } = await response.json();
+
+            // 5. Update UI with Results
+            // We iterate through results and update node statuses
+            const finalNodes = get().nodes.map(node => {
+                const result = results.find((r: { nodeId: string; status: ExecutionStatus; output: unknown }) => r.nodeId === node.id);
+                if (result) {
+                    return {
+                        ...node,
+                        data: {
+                            ...node.data,
+                            status: result.status,
+                            output: result.output,
+                            // error: result.error // If we had an error field in data
+                        }
+                    };
+                }
+                return node;
+            });
+
+            setNodes(finalNodes);
+
+        } catch (err) {
+            console.error("Execution Error:", err);
+            // Mark all as error? Or just the one that failed?
+            // For now, let's just alert or log.
         }
     },
 

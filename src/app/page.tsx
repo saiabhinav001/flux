@@ -11,7 +11,7 @@ const LandingPage = dynamic(() => import('@/components/home/LandingPage'), { ssr
 const CommandPalette = dynamic(() => import('@/components/command/CommandPalette'), { ssr: false });
 
 export default function Home() {
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<unknown>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

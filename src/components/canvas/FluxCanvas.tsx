@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
+
+import { useEffect, useState } from 'react';
 import {
     ReactFlow,
     Background,
@@ -11,13 +12,21 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { motion } from 'framer-motion';
-import { Zap } from 'lucide-react';
+import { Zap, Terminal } from 'lucide-react';
 
 import { useFluxStore } from '@/store/useFluxStore';
 
 import { TriggerNode } from '@/components/nodes/trigger-node';
 import { ActionNode } from '@/components/nodes/action-node';
 import AnimatedEdge from '@/components/edges/animated-edge';
+
+import { UserMenu } from '@/components/layout/UserMenu';
+import { LogDrawer } from '@/components/canvas/LogDrawer';
+import { HotkeysModal } from '@/components/layout/HotkeysModal';
+import PropertySidebar from '@/components/properties/PropertySidebar';
+
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 const nodeTypes = {
     trigger: TriggerNode,
@@ -27,11 +36,6 @@ const nodeTypes = {
 const edgeTypes = {
     animated: AnimatedEdge,
 };
-
-import PropertySidebar from '@/components/properties/PropertySidebar';
-
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
 
 const FluxCanvas = () => {
     const router = useRouter();
@@ -50,13 +54,22 @@ const FluxCanvas = () => {
         setSelectedNodeId
     } = useFluxStore();
 
+    const [isLogDrawerOpen, setIsLogDrawerOpen] = useState(false);
+    const [isHotkeysOpen, setIsHotkeysOpen] = useState(false);
+    const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
+
     useEffect(() => {
         // Initial fetch
         fetchGraph();
         subscribe();
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            // Optional: Handle precise session drops if needed, but Page wrapper handles most 
+            setUserEmail(session?.user?.email);
+        });
+
+        // Initial check in case onAuthStateChange doesn't fire immediately
+        supabase.auth.getUser().then(({ data }) => {
+            if (data.user?.email) setUserEmail(data.user.email);
         });
 
         return () => subscription.unsubscribe();
@@ -159,23 +172,27 @@ const FluxCanvas = () => {
                 )}
 
                 <PropertySidebar />
-                <Panel position="top-right" className="m-4 flex items-center gap-4">
+                <Panel position="top-right" className="m-4 flex items-center gap-3">
                     <button
-                        onClick={async () => {
-                            await supabase.auth.signOut();
-                            router.push('/');
-                        }}
-                        className="px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium hover:bg-red-500/20 transition-colors"
+                        onClick={() => setIsLogDrawerOpen(true)}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/50 border border-white/10 text-xs font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors backdrop-blur-md"
                     >
-                        Log Out
+                        <Terminal className="w-3.5 h-3.5" />
+                        <span>Logs</span>
                     </button>
-                    <div className="text-xs text-gray-500 font-mono">
-                        Flux v0.1.0-alpha
-                    </div>
+
+                    <UserMenu
+                        email={userEmail}
+                        onOpenHotkeys={() => setIsHotkeysOpen(true)}
+                    />
                 </Panel>
             </ReactFlow>
+
+            <LogDrawer isOpen={isLogDrawerOpen} onClose={() => setIsLogDrawerOpen(false)} />
+            <HotkeysModal isOpen={isHotkeysOpen} onClose={() => setIsHotkeysOpen(false)} />
         </motion.div>
     );
 };
 
 export default FluxCanvas;
+
