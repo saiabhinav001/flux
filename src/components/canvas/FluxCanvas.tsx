@@ -175,7 +175,7 @@ const FluxCanvas = () => {
                 <Panel position="top-right" className="m-4 flex items-center gap-3">
                     <button
                         onClick={() => setIsLogDrawerOpen(true)}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/50 border border-white/10 text-xs font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors backdrop-blur-md"
+                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 text-xs font-medium text-gray-300 hover:text-white transition-all backdrop-blur-md"
                     >
                         <Terminal className="w-3.5 h-3.5" />
                         <span>Logs</span>
