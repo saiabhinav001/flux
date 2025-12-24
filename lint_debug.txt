@@ -1,0 +1,13 @@
+
+> flux@0.1.0 lint
+> eslint
+
+
+C:\Users\Abhi\Downloads\flux\src\components\canvas\LogDrawer.tsx
+  2:31  warning  'useCallback' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Abhi\Downloads\flux\src\components\layout\UserMenu.tsx
+  97:63  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 2 problems (1 error, 1 warning)
+

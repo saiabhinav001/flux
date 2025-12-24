@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { Command } from 'cmdk';
 import { motion } from 'framer-motion';
 import { Search, Zap, Terminal } from 'lucide-react';
+import { useReactFlow } from '@xyflow/react';
 import { useFluxStore } from '@/store/useFluxStore';
 
 const CommandPalette = () => {
+    const { screenToFlowPosition } = useReactFlow();
     const { isCommandOpen, setCommandOpen, toggleCommandPalette, addNode, executeGraph } = useFluxStore();
     const [inputValue, setInputValue] = useState('');
 
@@ -64,7 +66,7 @@ const CommandPalette = () => {
                                 addNode({
                                     id: `trigger-${Date.now()}`,
                                     type: 'trigger',
-                                    position: { x: window.innerWidth / 2 - 75, y: window.innerHeight / 2 - 100 },
+                                    position: screenToFlowPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 - 100 }),
                                     data: { label: 'Cron Trigger', status: 'IDLE', triggerType: 'cron' }
                                 });
                                 setCommandOpen(false);
@@ -81,7 +83,7 @@ const CommandPalette = () => {
                                 addNode({
                                     id: `action-${Date.now()}`,
                                     type: 'action',
-                                    position: { x: window.innerWidth / 2 - 75, y: window.innerHeight / 2 },
+                                    position: screenToFlowPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 }),
                                     data: { label: 'HTTP Request', status: 'IDLE' }
                                 });
                                 setCommandOpen(false);

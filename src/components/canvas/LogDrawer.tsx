@@ -1,5 +1,5 @@
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Terminal, CheckCircle2, XCircle, Clock, ChevronRight, ChevronDown } from 'lucide-react'; // Replaced CheckCircle with CheckCircle2
 import { supabase } from '@/lib/supabase';

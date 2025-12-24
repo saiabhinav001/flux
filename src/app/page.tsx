@@ -45,8 +45,8 @@ export default function Home() {
     <main className="relative w-full h-full bg-[#0A0A0A]">
       <ReactFlowProvider>
         <FluxCanvas />
+        <CommandPalette />
       </ReactFlowProvider>
-      <CommandPalette />
 
       {/* Overlay Hints - Only show when logged in */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 pointer-events-none select-none">

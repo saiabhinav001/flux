@@ -94,6 +94,7 @@ export function UserMenu({ email, onOpenHotkeys }: UserMenuProps) {
     );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function MenuButton({ icon, label, onClick, danger }: { icon: any, label: string, onClick: () => void, danger?: boolean }) {
     return (
         <button
