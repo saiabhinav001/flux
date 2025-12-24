@@ -172,7 +172,8 @@ const FluxCanvas = () => {
                 )}
 
                 <PropertySidebar />
-                <Panel position="top-right" className="m-4 flex items-center gap-3">
+                <PropertySidebar />
+                <Panel position="top-right" className="m-2 sm:m-4 flex items-center gap-2 sm:gap-3">
                     <button
                         onClick={() => setIsLogDrawerOpen(true)}
                         className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 text-xs font-medium text-gray-300 hover:text-white transition-all backdrop-blur-md"

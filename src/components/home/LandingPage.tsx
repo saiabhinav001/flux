@@ -49,7 +49,7 @@ export default function LandingPage() {
                             </span>
                             v1.0 Public Beta is Live
                         </div>
-                        <h1 className="text-5xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-8">
+                        <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-8">
                             The Visual Backend for <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-violet-400">Modern Developers.</span>
                         </h1>
