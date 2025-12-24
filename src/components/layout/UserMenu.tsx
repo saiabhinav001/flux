@@ -55,7 +55,7 @@ export function UserMenu({ email, onOpenHotkeys }: UserMenuProps) {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: 8, scale: 0.96 }}
                             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                            className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-64 bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 p-2 ring-1 ring-white/5 origin-top-right"
+                            className="fixed top-[68px] left-4 right-4 w-auto sm:absolute sm:top-full sm:left-auto sm:right-0 sm:mt-2 sm:w-64 bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 p-2 ring-1 ring-white/5 origin-top sm:origin-top-right"
                         >
                             <div className="px-3 py-2.5 mb-1 border-b border-white/5 mx-1">
                                 <p className="text-[10px] text-gray-500 uppercase tracking-wider font-bold mb-0.5">My Account</p>
